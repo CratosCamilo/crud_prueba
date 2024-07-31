@@ -1,5 +1,8 @@
 import './App.css';
-import { useState } from "react"
+import { useState } from "react";
+import Axios from "axios";
+
+
 
 function App() {
 
@@ -7,8 +10,14 @@ function App() {
   const [edad, setEdad] = useState(0);
   const [cargo, setCargo] = useState("");
 
-  const mostrarDatos = ()=>{
-    alert(nombre)
+  const add = () => {
+    Axios.post("http://localhost:3001/create", {
+      nombre: nombre,
+      edad: edad,
+      cargo: cargo
+    }).then(() => {
+      alert("Usuario registrado")
+    });
   }
   return (
     <div className="App">
@@ -20,7 +29,7 @@ function App() {
           type="text"></input></label>
         <label>Edad: <input
           onChange={(event) => {
-            setEdad(event.target.validationMessage);
+            setEdad(event.target.value);
           }}
           type="number"></input></label>
         <label>Cargo: <input
@@ -28,7 +37,7 @@ function App() {
             setCargo(event.target.value);
           }}
           type="text"></input></label>
-        <button onClick={mostrarDatos}>Registrar</button>
+        <button onClick={add}>Registrar</button>
       </div>
     </div>
   );
